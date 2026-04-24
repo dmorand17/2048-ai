@@ -7,7 +7,8 @@
     "build": "vue-tsc && vite build",
     "test": "vitest run",
     "lint": "eslint . --ext .ts,.vue && prettier --check .",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "docker:build": "docker build -t 2048-ai ."
   },
   "dependencies": {
     "vue": "^3.4.0"

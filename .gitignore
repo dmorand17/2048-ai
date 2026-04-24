@@ -27,6 +27,10 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
+# EPCC workflow artifacts
+EPCC_EXPLORE.md
+EPCC_PLAN.md
+
 # Editor
 .vscode/*
 !.vscode/extensions.json

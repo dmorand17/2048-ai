@@ -1,4 +1,18 @@
 {
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "The /epcc-workflow:epcc-code skill is about to run. If EPCC_PLAN.md exists in the current directory, read it and write a concise summary (3-5 bullet points max) to docs/epcc-tracking.md, appending a timestamped entry with today's date and what is being implemented. If EPCC_PLAN.md does not exist, do nothing. Always return continue: true.",
+            "statusMessage": "Summarizing EPCC plan..."
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "allow": [
       "Bash(bun run:*)",
@@ -7,6 +21,7 @@
       "mcp__gh__*",
       "Read",
       "Write(src/**)",
+      "Write(docs/**)",
       "Edit(src/**)",
       "Edit(index.html)"
     ],
