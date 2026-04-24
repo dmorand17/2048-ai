@@ -3,11 +3,12 @@
     "allow": [
       "Bash(bun run:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)",
+      "Bash(git add:*)",
       "mcp__gh__*",
       "Read",
-      "Write(/Users/domorand/workspace/personal/2048-ai/src/**)",
-      "Edit(/Users/domorand/workspace/personal/2048-ai/src/**)"
+      "Write(src/**)",
+      "Edit(src/**)",
+      "Edit(index.html)"
     ],
     "deny": [],
     "ask": []

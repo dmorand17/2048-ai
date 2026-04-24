@@ -12,36 +12,36 @@ const entries: LeaderboardEntry[] = [
 describe('ScoreHistory', () => {
   it('renders a row for each entry', () => {
     const wrapper = mount(ScoreHistory, { props: { entries } });
-    const rows = wrapper.findAll('tbody tr');
+    const rows = wrapper.findAll('.score-row');
     expect(rows).toHaveLength(3);
   });
 
   it('displays scores with rank numbers', () => {
     const wrapper = mount(ScoreHistory, { props: { entries } });
-    const rows = wrapper.findAll('tbody tr');
-    expect(rows[0].find('.col-rank').text()).toBe('1');
-    expect(rows[1].find('.col-rank').text()).toBe('2');
-    expect(rows[2].find('.col-rank').text()).toBe('3');
+    const rows = wrapper.findAll('.score-row');
+    expect(rows[0].find('.row-rank').text()).toBe('01');
+    expect(rows[1].find('.row-rank').text()).toBe('02');
+    expect(rows[2].find('.row-rank').text()).toBe('03');
   });
 
   it('formats score with locale number formatting', () => {
     const wrapper = mount(ScoreHistory, { props: { entries } });
-    const firstScore = wrapper.findAll('tbody tr')[0].find('.col-score').text();
+    const firstScore = wrapper.findAll('.score-row')[0].find('.row-score').text();
     expect(firstScore).toBe((5000).toLocaleString());
   });
 
   it('applies top-entry class only to the first row', () => {
     const wrapper = mount(ScoreHistory, { props: { entries } });
-    const rows = wrapper.findAll('tbody tr');
-    expect(rows[0].classes()).toContain('top-entry');
-    expect(rows[1].classes()).not.toContain('top-entry');
-    expect(rows[2].classes()).not.toContain('top-entry');
+    const rows = wrapper.findAll('.score-row');
+    expect(rows[0].classes()).toContain('score-row--top');
+    expect(rows[1].classes()).not.toContain('score-row--top');
+    expect(rows[2].classes()).not.toContain('score-row--top');
   });
 
   it('shows empty state message when there are no entries', () => {
     const wrapper = mount(ScoreHistory, { props: { entries: [] } });
     expect(wrapper.find('.empty-state').exists()).toBe(true);
-    expect(wrapper.find('table').exists()).toBe(false);
+    expect(wrapper.find('.score-list').exists()).toBe(false);
   });
 
   it('hides the clear button when entries list is empty', () => {
