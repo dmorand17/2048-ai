@@ -4,6 +4,8 @@ A Vue + TypeScript implementation of the 2048 game.
 
 > Inspired by the [Claude Code on Amazon Bedrock](https://catalog.workshops.aws/claude-code-on-amazon-bedrock/en-US) workshop.
 
+![2048 AI game screenshot](docs/screenshot.png)
+
 ---
 
 ## Claude Code Setup
