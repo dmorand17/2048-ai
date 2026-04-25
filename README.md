@@ -1,8 +1,17 @@
 # 2048 AI
 
-A Vue + TypeScript implementation of the 2048 game.
+A Vue + TypeScript implementation of the classic 2048 puzzle game, built with AI-assisted development.
 
 > Inspired by the [Claude Code on Amazon Bedrock](https://catalog.workshops.aws/claude-code-on-amazon-bedrock/en-US) workshop.
+
+![2048 AI game screenshot](docs/screenshot.png)
+
+## Features
+
+- Classic 2048 gameplay with keyboard and swipe controls
+- Dark theme UI with smooth tile animations
+- Score history sidebar showing recent game results
+- Containerized with Docker, deployable to AWS ECS via GitHub Actions
 
 ---
 
@@ -91,13 +100,3 @@ The `.github/workflows/deploy.yml` workflow builds and pushes the image to ECR o
    }
    ```
    Attach the `AmazonEC2ContainerRegistryPowerUser` managed policy to the role.
-
-## Project Structure
-
-```
-src/
-  components/   # Reusable Vue components
-  composables/  # Custom Vue composables
-  utils/        # Pure utility functions
-  types/        # TypeScript type definitions
-```
