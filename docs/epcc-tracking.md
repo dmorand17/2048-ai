@@ -11,3 +11,13 @@
 - GitHub Actions workflow (`deploy.yml`) authenticates to AWS via OIDC, builds and pushes image to ECR tagged with commit SHA + `latest` on push to `main`
 - No runtime env vars — pure static SPA, all config baked at build time
 - Pre-requisites: ECR repo created, IAM OIDC role configured, three GitHub repository variables set (`AWS_ACCOUNT_ID`, `AWS_REGION`, `ECR_REPOSITORY`, `OIDC_ROLE_NAME`)
+
+---
+
+## 2026-04-24 — Add Game Screenshot to README
+
+**Source plan**: `EPCC_PLAN.md`
+
+- Start dev server, navigate Chrome DevTools MCP to `localhost:3000`, and capture a viewport screenshot
+- Save screenshot to `docs/screenshot.png`
+- Embed screenshot in README below the project tagline

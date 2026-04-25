@@ -22,6 +22,7 @@ coverage/
 # Logs
 *.log
 npm-debug.log*
+.claude/hooks-*
 
 # OS
 .DS_Store
