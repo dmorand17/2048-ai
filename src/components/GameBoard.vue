@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import type { Board } from '../types/game';
 
-defineProps<{
+const props = defineProps<{
   board: Board;
+  bombMode: boolean;
 }>();
+
+const emit = defineEmits<{
+  'tile-click': [{ row: number; col: number }];
+}>();
+
+let pointerDownAt = 0;
 
 function tileClass(value: number): string {
   if (value === 0) return 'tile tile-empty';
@@ -13,16 +20,29 @@ function tileClass(value: number): string {
 function tileLabel(value: number): string {
   return value === 0 ? '' : String(value);
 }
+
+function onPointerDown(): void {
+  if (!props.bombMode) return;
+  pointerDownAt = Date.now();
+}
+
+function onPointerUp(row: number, col: number, value: number): void {
+  if (!props.bombMode || value === 0) return;
+  if (Date.now() - pointerDownAt > 200) return;
+  emit('tile-click', { row, col });
+}
 </script>
 
 <template>
-  <div class="board">
+  <div class="board" :class="{ 'bomb-mode': bombMode }">
     <div class="grid">
       <template v-for="(row, rowIndex) in board" :key="rowIndex">
         <div
           v-for="(cell, colIndex) in row"
           :key="`${rowIndex}-${colIndex}-${cell}`"
-          :class="tileClass(cell)"
+          :class="[tileClass(cell), bombMode && cell !== 0 ? 'tile-targetable' : '']"
+          @pointerdown="onPointerDown"
+          @pointerup="onPointerUp(rowIndex, colIndex, cell)"
         >
           <span v-if="cell !== 0" class="tile-inner">{{ tileLabel(cell) }}</span>
         </div>
@@ -190,5 +210,21 @@ function tileLabel(value: number): string {
   border: 1px solid rgba(232, 121, 249, 0.5);
   font-size: clamp(0.75rem, 2vw, 1.3rem);
   box-shadow: 0 0 40px rgba(232, 121, 249, 0.3);
+}
+
+.bomb-mode {
+  cursor: crosshair;
+}
+
+.tile-targetable {
+  cursor: crosshair;
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.tile-targetable:hover {
+  border-color: rgba(239, 68, 68, 0.7) !important;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.45) !important;
 }
 </style>

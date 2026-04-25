@@ -125,6 +125,12 @@ export function moveBoard(
   return { board: workingBoard, score: totalScore, moved };
 }
 
+export function removeTile(board: Board, row: number, col: number): Board {
+  const newBoard = deepCopyBoard(board);
+  newBoard[row][col] = 0;
+  return newBoard;
+}
+
 export function checkWin(board: Board): boolean {
   return board.some((row) => row.some((cell) => cell === 2048));
 }
