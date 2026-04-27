@@ -7,6 +7,7 @@ import {
   createEmptyBoard,
   initBoard,
   moveBoard,
+  removeTile,
 } from './gameLogic';
 
 describe('createEmptyBoard', () => {
@@ -211,6 +212,64 @@ describe('checkWin', () => {
       [0, 0, 0, 2048],
     ];
     expect(checkWin(board)).toBe(true);
+  });
+});
+
+describe('removeTile', () => {
+  it('sets the target cell to 0', () => {
+    const board: Board = [
+      [2, 4, 8, 16],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
+    const result = removeTile(board, 0, 2);
+    expect(result[0][2]).toBe(0);
+  });
+
+  it('leaves all other cells unchanged', () => {
+    const board: Board = [
+      [2, 4, 8, 16],
+      [32, 64, 128, 256],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
+    const result = removeTile(board, 1, 3);
+    expect(result[0]).toEqual([2, 4, 8, 16]);
+    expect(result[1]).toEqual([32, 64, 128, 0]);
+  });
+
+  it('does not mutate the original board', () => {
+    const board: Board = [
+      [2, 4, 8, 16],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
+    removeTile(board, 0, 0);
+    expect(board[0][0]).toBe(2);
+  });
+
+  it('works on corner cells', () => {
+    const board: Board = [
+      [512, 0, 0, 1024],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [2048, 0, 0, 4],
+    ];
+    expect(removeTile(board, 0, 0)[0][0]).toBe(0);
+    expect(removeTile(board, 3, 3)[3][3]).toBe(0);
+  });
+
+  it('removing an already-empty cell leaves it 0', () => {
+    const board: Board = [
+      [2, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
+    const result = removeTile(board, 0, 1);
+    expect(result[0][1]).toBe(0);
   });
 });
 

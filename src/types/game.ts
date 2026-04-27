@@ -8,4 +8,6 @@ export interface GameState {
   bestScore: number;
   isGameOver: boolean;
   hasWon: boolean;
+  bombCount: number;
+  bombMode: boolean;
 }

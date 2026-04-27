@@ -37,6 +37,16 @@ Custom slash commands defined in `.claude/skills/`:
 
 ---
 
+## Features
+
+- Classic 2048 gameplay with keyboard (arrow keys / WASD) and swipe controls
+- Dark theme UI with glassmorphism panels and smooth tile animations
+- Score history sidebar showing ranked past games
+- **Bomb power-up** — earn 1 bomb per 500 points scored; activate to remove any tile after confirmation
+- Containerized with Docker, deployable to AWS ECS via GitHub Actions
+
+---
+
 ## Development
 
 ```bash

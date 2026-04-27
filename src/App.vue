@@ -3,11 +3,12 @@ import { onBeforeUnmount, onMounted, ref } from 'vue';
 import GameBoard from './components/GameBoard.vue';
 import GameHeader from './components/GameHeader.vue';
 import GameMessage from './components/GameMessage.vue';
+import PowerUpBar from './components/PowerUpBar.vue';
 import ScoreHistory from './components/ScoreHistory.vue';
 import { useGame } from './composables/useGame';
 import { useLeaderboard } from './composables/useLeaderboard';
 
-const { state, newGame, handleKeydown, handleSwipe } = useGame();
+const { state, newGame, handleKeydown, handleSwipe, toggleBombMode, useBomb } = useGame();
 const { entries: leaderboardEntries, addScore, clearLeaderboard } = useLeaderboard();
 
 function onNewGame(): void {
@@ -66,8 +67,17 @@ onBeforeUnmount(() => {
             :best-score="state.bestScore"
             @new-game="onNewGame"
           />
+          <PowerUpBar
+            :bomb-count="state.bombCount"
+            :bomb-mode="state.bombMode"
+            @toggle-bomb="toggleBombMode"
+          />
           <div ref="boardRef" class="board-wrapper">
-            <GameBoard :board="state.board" />
+            <GameBoard
+              :board="state.board"
+              :bomb-mode="state.bombMode"
+              @tile-click="({ row, col }) => useBomb(row, col)"
+            />
             <GameMessage
               :is-game-over="state.isGameOver"
               :has-won="state.hasWon"

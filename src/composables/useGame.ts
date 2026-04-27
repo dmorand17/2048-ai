@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 import type { Direction, GameState } from '../types/game';
-import { addRandomTile, checkGameOver, checkWin, initBoard, moveBoard } from '../utils/gameLogic';
+import { addRandomTile, checkGameOver, checkWin, initBoard, moveBoard, removeTile } from '../utils/gameLogic';
 
 const BEST_SCORE_KEY = '2048-best-score';
 
@@ -28,6 +28,8 @@ export function useGame() {
     bestScore: loadBestScore(),
     isGameOver: false,
     hasWon: false,
+    bombCount: 0,
+    bombMode: false,
   });
 
   function newGame(): void {
@@ -35,6 +37,8 @@ export function useGame() {
     state.score = 0;
     state.isGameOver = false;
     state.hasWon = false;
+    state.bombCount = 0;
+    state.bombMode = false;
   }
 
   function move(direction: Direction): void {
@@ -50,6 +54,10 @@ export function useGame() {
       state.bestScore = state.score;
       saveBestScore(state.bestScore);
     }
+
+    const oldMilestone = Math.floor((state.score - gained) / 500);
+    const newMilestone = Math.floor(state.score / 500);
+    state.bombCount += newMilestone - oldMilestone;
 
     // Add a random tile after a successful move
     state.board = addRandomTile(newBoard);
@@ -104,5 +112,31 @@ export function useGame() {
     }
   }
 
-  return { state, move, newGame, handleKeydown, handleSwipe };
+  function toggleBombMode(): void {
+    if (state.isGameOver || state.hasWon || state.bombCount === 0) return;
+    state.bombMode = !state.bombMode;
+  }
+
+  function useBomb(row: number, col: number): void {
+    if (!state.bombMode || state.bombCount === 0 || state.isGameOver || state.hasWon) return;
+    if (state.board[row][col] === 0) return;
+
+    let confirmed = false;
+    try {
+      confirmed = window.confirm(`Detonate bomb on tile ${state.board[row][col]}?`);
+    } catch {
+      return;
+    }
+    if (!confirmed) return;
+
+    state.board = removeTile(state.board, row, col);
+    state.bombCount -= 1;
+    state.bombMode = false;
+
+    if (checkGameOver(state.board)) {
+      state.isGameOver = true;
+    }
+  }
+
+  return { state, move, newGame, handleKeydown, handleSwipe, toggleBombMode, useBomb };
 }

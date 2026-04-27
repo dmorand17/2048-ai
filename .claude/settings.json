@@ -15,11 +15,6 @@
         "matcher": "*",
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "A Skill tool just ran. If and ONLY IF the skill was 'epcc-workflow:epcc-code', read EPCC_PLAN.md and prepend a new timestamped entry to docs/epcc-tracking.md with today's date and a 3-5 bullet summary of what was implemented. The new entry must be inserted at the TOP of the file, before any existing content. Otherwise do nothing.",
-            "statusMessage": "Summarizing EPCC plan..."
-          },
-          {
             "type": "command",
             "command": "cat >> \"$CLAUDE_PROJECT_DIR\"/.claude/hooks-skill.jsonl"
           }
