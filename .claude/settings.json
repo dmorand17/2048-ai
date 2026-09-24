@@ -1,4 +1,11 @@
 {
+  "env": {
+    "CLAUDE_CODE_USE_BEDROCK": "0",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "",
+    "CLAUDE_CODE_SUBAGENT_MODEL": ""
+  },
   "hooks": {
     "Stop": [
       {
@@ -30,9 +37,11 @@
       "mcp__gh__*",
       "Read",
       "Write(src/**)",
+      "Write(infra/**)",
       "Write(docs/**)",
       "Edit(src/**)",
-      "Edit(index.html)"
+      "Edit(index.html)",
+      "Edit(infra/**)"
     ],
     "deny": [],
     "ask": []

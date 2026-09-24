@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue';
 import GameBoard from './components/GameBoard.vue';
 import GameHeader from './components/GameHeader.vue';
 import GameMessage from './components/GameMessage.vue';
+import PlayerProfile from './components/PlayerProfile.vue';
 import PowerUpBar from './components/PowerUpBar.vue';
 import ScoreHistory from './components/ScoreHistory.vue';
 import { useGame } from './composables/useGame';
@@ -90,10 +91,13 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <ScoreHistory
-        :entries="leaderboardEntries"
-        @clear="clearLeaderboard"
-      />
+      <div class="side-col">
+        <ScoreHistory
+          :entries="leaderboardEntries"
+          @clear="clearLeaderboard"
+        />
+        <PlayerProfile />
+      </div>
     </div>
   </div>
 </template>
